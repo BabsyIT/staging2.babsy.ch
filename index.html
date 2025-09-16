@@ -3,90 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Babsy - Die neue Welt der Kinderbetreuung</title>
-    <meta name="description" content="Babsy - Der gemeinnützige Verein für sichere, schnelle und seriöse Kinderbetreuung. Verfügbar als App für registrierte Eltern und Sitter.">
+    <title>Events - Babsy</title>
+    <meta name="description" content="Aktuelle Events und Neuigkeiten von Babsy - Der gemeinnützige Verein für Kinderbetreuung.">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        colors: {
-                            babsypurple: {
-                                50:  '#f4b8e3',
-                                100: '#f1a7dc',
-                                200: '#de2bab',
-                                300: '#d421a1',
-                                400: '#c21e94',
-                                500: '#a71a80', // Hauptfarbe
-                                600: '#9f1979',
-                                700: '#8d166b',
-                                800: '#7c135e',
-                                900: '#6a1151',
-                            },
-                            babsyblue: {
-                                50:  '#adf8ff',
-                                100: '#5cf1ff',
-                                200: '#1fecff',
-                                300: '#00e0f5',
-                                400: '#00bbcc',
-                                500: '#009fad', // Hauptfarbe
-                                600: '#0096a3',
-                                700: '#00838f',
-                                800: '#00707a',
-                                900: '#005e66',
-                            },
-                            babsygreen: {
-                                50:  '#d2ecee',
-                                100: '#c3e6e9',
-                                200: '#b5e0e3',
-                                300: '#a6d9de',
-                                400: '#97d3d8',
-                                500: '#89cdd3', // Hauptfarbe
-                                600: '#97c6cd',
-                                700: '#6ac0c8',
-                                800: '#5bbac2',
-                                900: '#4cb4bd',
-                            },
-                            fancy: '#ff6600'
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        babsypurple: {
+                            50:  '#f4b8e3',
+                            100: '#f1a7dc',
+                            200: '#de2bab',
+                            300: '#d421a1',
+                            400: '#c21e94',
+                            500: '#a71a80',
+                            600: '#9f1979',
+                            700: '#8d166b',
+                            800: '#7c135e',
+                            900: '#6a1151',
+                        },
+                        babsyblue: {
+                            50:  '#adf8ff',
+                            100: '#5cf1ff',
+                            200: '#1fecff',
+                            300: '#00e0f5',
+                            400: '#00bbcc',
+                            500: '#009fad',
+                            600: '#0096a3',
+                            700: '#00838f',
+                            800: '#00707a',
+                            900: '#005e66',
+                        },
+                        babsygreen: {
+                            50:  '#d2ecee',
+                            100: '#c3e6e9',
+                            200: '#b5e0e3',
+                            300: '#a6d9de',
+                            400: '#97d3d8',
+                            500: '#89cdd3',
+                            600: '#97c6cd',
+                            700: '#6ac0c8',
+                            800: '#5bbac2',
+                            900: '#4cb4bd',
                         }
                     }
                 }
             }
-</script>
+        }
+    </script>
     
-    <!-- Alpine.js für interaktive Elemente -->
+    <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Marked.js für Markdown -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-
-    
-    <!-- Custom Styles -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-        }
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         .gradient-text {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-        .float-animation {
-            animation: float 6s ease-in-out infinite;
         }
         @keyframes fade-in-up {
             from {
@@ -101,29 +89,64 @@
         .animate-fade-in-up {
             animation: fade-in-up 0.6s ease-out;
         }
+        
+        /* Event Card Hover Effects */
+        .event-card {
+            transition: all 0.3s ease;
+        }
+        .event-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* Event Type Badges */
+        .event-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.625rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .event-badge.meet-greet {
+            background-color: #f4b8e3;
+            color: #8d166b;
+        }
+        .event-badge.workshop {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        .event-badge.info {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        .event-badge.online {
+            background-color: #cffafe;
+            color: #0e7490;
+        }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50" x-data="eventsApp()" x-init="init()">
     <!-- Navigation -->
     <nav class="bg-white shadow-lg sticky top-0 z-50" x-data="{ mobileMenuOpen: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <!-- Logo -->
                     <div class="flex-shrink-0 flex items-center">
-                        <img src="babsy-logo.png" alt="Babsy Logo" class="h-8 w-auto">
+                        <a href="../">
+                            <img src="../assets/images/babsy-logo.png" alt="Babsy Logo" class="h-8 w-auto" 
+                                 onerror="this.src='../babsy-logo.png'; this.onerror=null;">
+                        </a>
                     </div>
                 </div>
                 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Home</a>
-                    <a href="#about" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Über uns</a>
-                    <a href="#services" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Services</a>
-                    <a href="/events/" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Events</a>
-                    <a href="#team" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Team</a>
-                    <a href="#support" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Unterstützung</a>
-                    <a href="#contact" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Kontakt</a>
+                    <a href="../" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Home</a>
+                    <a href="../#about" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Über uns</a>
+                    <a href="../#services" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Services</a>
+                    <a href="/events/" class="text-babsypurple-600 font-medium">Events</a>
+                    <a href="../#contact" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Kontakt</a>
                     <button class="bg-babsypurple-700 text-white px-4 py-2 rounded-lg hover:bg-babsypurple-800 transition duration-300">
                         Jetzt registrieren
                     </button>
@@ -144,601 +167,493 @@
         <!-- Mobile menu -->
         <div x-show="mobileMenuOpen" x-transition class="md:hidden bg-white border-t">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#home" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Home</a>
-                <a href="#about" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Über uns</a>
-                <a href="#services" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Services</a>
-                <a href="/events/" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Events</a>
-                <a href="#team" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Team</a>
-                <a href="#support" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Unterstützung</a>
-                <a href="#contact" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Kontakt</a>
-                <button class="w-full text-left bg-babsypurple-700 text-white px-3 py-2 rounded-lg hover:bg-babsypurple-800">
-                    Jetzt registrieren
-                </button>
+                <a href="../" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Home</a>
+                <a href="../#about" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Über uns</a>
+                <a href="../#services" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Services</a>
+                <a href="/events/" class="block px-3 py-2 text-babsypurple-600 font-medium">Events</a>
+                <a href="../#contact" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Kontakt</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative overflow-hidden min-h-screen">
-        <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-screen">
-            <!-- Text Content -->
-            <div class="px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-                <div class="max-w-lg mx-auto lg:mx-0">
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-                        <span class="gradient-text">sicher. schnell. seriös</span>
-                    </h1>
-                    <p class="text-xl md:text-2xl text-gray-600 mb-4">
-                        safe. swift. secure
-                    </p>
-                    <p class="text-lg text-gray-700 mb-8">
-                        Die neue Welt der Kinderbetreuung - Verfügbar als App für registrierte Eltern und Sitter
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <button class="bg-babsypurple-800 text-white px-8 py-3 rounded-lg font-semibold hover:bg-babsypurple-800 transition duration-300 transform hover:scale-105">
-                            Jetzt registrieren
-                        </button>
-                        <button class="border-2 border-babsypurple-600 text-babsypurple-600 px-8 py-3 rounded-lg font-semibold hover:bg-babsypurple-700 hover:text-white transition duration-300">
-                            Sign up now
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Image with direct path -->
-            <div class="relative lg:h-screen">
-                <div class="h-full flex items-center justify-center p-4">
-                    <div class="w-full max-w-lg lg:max-w-full h-98 rounded-3xl overflow-hidden float-animation">
-                        <img 
-                            src="babsy-dorf-jung.png" 
-                            alt="Babsy Kinderbetreuung"
-                            class="w-full h-full object-cover"
-                        >
-                    </div>
-                </div>
-            </div>
+    <section class="bg-gradient-to-br from-babsypurple-600 via-babsypurple-700 to-cyan-600 py-20 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute -top-10 -right-10 w-96 h-96 bg-white rounded-full"></div>
+            <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-white rounded-full"></div>
         </div>
         
-        <!-- Wave divider -->
-        <div class="absolute bottom-0 w-full">
-            <svg viewBox="0 0 1440 120" class="w-full h-20 fill-gray-50">
-                <path d="M0,64 C480,150 960,-20 1440,64 L1440,120 L0,120 Z"></path>
-            </svg>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    <span class="gradient-text">Was ist Babsy?</span>
-                </h2>
-                <p class="text-gray-600 text-lg">Wir stellen uns vor</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <div class="bg-white rounded-2xl shadow-xl p-8">
-                        <h3 class="text-2xl font-bold mb-4 text-gray-800">Über Babsy</h3>
-                        <p class="text-gray-600 mb-4">
-                            Gegründet im September 2018 als kleiner Verein von 2 Frauen die eine Vision hatten, ging es dabei immer darum die Probleme von Eltern zu lösen beim Finden geeigneter Kinderbetreuung und gleichzeitig eine tolle Möglichkeit für Sitter zu bieten.
-                        </p>
-                        <p class="text-gray-600 mb-4">
-                            Mit mehr Verstärkung wuchsen auch die Themen und mittlerweile geht es darum das gesamte Kinderbetreuungssystem ein Stück gerechter zu machen und einen Teil dazu zu leisten, dass die Welt der Kinderbetreuung eine einfachere und gleichzeitig sichere Welt ist.
-                        </p>
-                        <p class="text-gray-600">
-                            Babsy setzt sich auch politisch ein für mehr Fairness für Familien, für einfachere Administration für Eltern und Sitter, für die Schaffung von mehr Arbeitsplätzen für Betreuer:innen.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-babsypurple-100 rounded-xl p-6 text-center">
-                        <div class="text-4xl font-bold text-babsypurple-600 mb-2">900+</div>
-                        <p class="text-gray-700">Erfolgreiche Buchungen</p>
-                    </div>
-                    <div class="bg-cyan-100 rounded-xl p-6 text-center">
-                        <div class="text-4xl font-bold text-cyan-600 mb-2">24/7</div>
-                        <p class="text-gray-700">App-Verfügbarkeit</p>
-                    </div>
-                    <div class="bg-green-100 rounded-xl p-6 text-center">
-                        <div class="text-4xl font-bold text-green-600 mb-2">4</div>
-                        <p class="text-gray-700">Kantone abgedeckt</p>
-                    </div>
-                    <div class="bg-yellow-100 rounded-xl p-6 text-center">
-                        <div class="text-4xl font-bold text-yellow-600 mb-2">2018</div>
-                        <p class="text-gray-700">Gegründet</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Vision & Mission -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="bg-gradient-to-br from-babsypurple-50 to-babsypurple-100 rounded-2xl p-8">
-                    <h3 class="text-2xl font-bold mb-4 text-babsypurple-800">Vision</h3>
-                    <p class="text-gray-700 mb-4">
-                        Babsy möchte die sicherste Kinderbetreuungsplattform im deutschsprachigen Raum sein. Sichere Kinderbetreuung, zu jederzeit, darf kein Glückstreffer sein, es ist ein Recht.
-                    </p>
-                    <p class="text-gray-700">
-                        Die Vision von Babsy ist es, zuverlässige Kinderbetreuung überall und jederzeit zur Verfügung zu stellen.
-                    </p>
-                </div>
-                
-                <div class="bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-2xl p-8">
-                    <h3 class="text-2xl font-bold mb-4 text-cyan-800">Mission</h3>
-                    <p class="text-gray-700 mb-4">
-                        Unsere Mission ist es, den Nutzern das zu bieten, was sie brauchen! Babsy möchte dabei helfen, die richtige Betreuung der Familie sicherzustellen.
-                    </p>
-                    <p class="text-gray-700">
-                        Von einem ehrenamtlich arbeitenden Vorstand geleitet, richtet sich Babsy an die echten Herausforderungen die viele Eltern heute haben.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="text-center mt-12">
-                <p class="text-2xl font-semibold text-gray-800 italic">
-                    "Babsy macht es einfach, aber Babsy macht es auch sicher."
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                    Events & Neuigkeiten
+                </h1>
+                <p class="text-xl text-babsypurple-100 mb-8 max-w-2xl mx-auto">
+                    Bleiben Sie auf dem Laufenden über unsere Meet & Greet Events, Workshops und alle wichtigen Neuigkeiten rund um Babsy
                 </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button @click="filterEvents('all')" 
+                            :class="activeFilter === 'all' ? 'bg-white text-babsypurple-600' : 'bg-babsypurple-800 text-white border-2 border-white/30'" 
+                            class="px-6 py-3 rounded-lg font-semibold transition duration-300 hover:transform hover:scale-105">
+                        Alle Events
+                    </button>
+                    <button @click="filterEvents('meet-greet')" 
+                            :class="activeFilter === 'meet-greet' ? 'bg-white text-babsypurple-600' : 'bg-babsypurple-800 text-white border-2 border-white/30'" 
+                            class="px-6 py-3 rounded-lg font-semibold transition duration-300 hover:transform hover:scale-105">
+                        Meet & Greet
+                    </button>
+                    <button @click="filterEvents('workshop')" 
+                            :class="activeFilter === 'workshop' ? 'bg-white text-babsypurple-600' : 'bg-babsypurple-800 text-white border-2 border-white/30'" 
+                            class="px-6 py-3 rounded-lg font-semibold transition duration-300 hover:transform hover:scale-105">
+                        Workshops
+                    </button>
+                    <button @click="filterEvents('online')" 
+                            :class="activeFilter === 'online' ? 'bg-white text-babsypurple-600' : 'bg-babsypurple-800 text-white border-2 border-white/30'" 
+                            class="px-6 py-3 rounded-lg font-semibold transition duration-300 hover:transform hover:scale-105">
+                        Online Events
+                    </button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- App Section -->
-    <section id="services" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <!-- Events Grid -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    <span class="gradient-text">Unsere Babsy App</span>
-                </h2>
-                <p class="text-gray-600 text-lg">Für Android & iOS verfügbar</p>
+            <div x-show="loading" class="flex justify-center items-center py-20">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-babsypurple-600"></div>
             </div>
             
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-2">
-                    <div class="bg-babsypurple-100 rounded-full w-16 h-16 flex items-center justify-center mb-4 mx-auto">
-                        <svg class="w-8 h-8 text-babsypurple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 text-center">Mobile First</h3>
-                    <p class="text-gray-600 text-center">Optimiert für die Nutzung auf Smartphones - immer und überall verfügbar</p>
-                </div>
-                
-                <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-2">
-                    <div class="bg-cyan-100 rounded-full w-16 h-16 flex items-center justify-center mb-4 mx-auto">
-                        <svg class="w-8 h-8 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 text-center">Geprüfte Nutzer</h3>
-                    <p class="text-gray-600 text-center">Alle Babysitter und Eltern werden von uns überprüft für maximale Sicherheit</p>
-                </div>
-                
-                <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-2">
-                    <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mb-4 mx-auto">
-                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 text-center">Schnelle Vermittlung</h3>
-                    <p class="text-gray-600 text-center">Finde in wenigen Minuten verfügbare Babysitter in deiner Nähe</p>
-                </div>
-            </div>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
-                <a href="https://play.google.com/store/apps/details?id=ch.babsy.babsyapp&hl=de_CH" target="_blank" rel="noopener noreferrer" class="inline-block">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" class="h-14">
-                </a>
-                <a href="https://apps.apple.com/ch/app/babsy/id1584418581" target="_blank" rel="noopener noreferrer" class="inline-block">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" class="h-14">
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
-                <span class="gradient-text">Erfahrungen von Eltern mit Babsy</span>
-            </h2>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-gray-50 rounded-xl p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-babsypurple-200 rounded-full flex items-center justify-center">
-                            <span class="text-babsypurple-600 font-semibold">MF</span>
-                        </div>
-                        <div class="ml-3">
-                            <p class="font-semibold">Marco F.</p>
-                            <p class="text-sm text-gray-600">aus Basel</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-700 italic">
-                        "Obwohl meine Frau und ich anfangs etwas skeptisch waren, war es eine gute Erfahrung und es hat alles gut funktioniert!"
-                    </p>
-                </div>
-                
-                <div class="bg-gray-50 rounded-xl p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-cyan-200 rounded-full flex items-center justify-center">
-                            <span class="text-cyan-600 font-semibold">SS</span>
-                        </div>
-                        <div class="ml-3">
-                            <p class="font-semibold">Sandra S.</p>
-                            <p class="text-sm text-gray-600">aus Allschwil</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-700 italic">
-                        "Mit Babsy ist das nun möglich und deswegen finde ich es eine tolle Sache. Endlich eine Lösung die auf meine Bedürfnisse zugeschnitten ist."
-                    </p>
-                </div>
-                
-                <div class="bg-gray-50 rounded-xl p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center">
-                            <span class="text-green-600 font-semibold">LS</span>
-                        </div>
-                        <div class="ml-3">
-                            <p class="font-semibold">Lea S.</p>
-                            <p class="text-sm text-gray-600">aus Basel</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-700 italic">
-                        "Innerhalb von wenigen Stunden hatten wir eine Lösung gefunden. Das Meet & Greet Event war super!"
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team Section mit runden Bildern -->
-    <section id="team" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    <span class="gradient-text">Die Gründer</span>
-                </h2>
-                <p class="text-gray-600 text-lg">Engagierte Menschen mit einer Vision</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="text-center">
-                    <!-- Rundes Bild für Andrea -->
-                    <div class="relative inline-block mb-4">
-                        <div class="w-40 h-40 rounded-full overflow-hidden shadow-xl mx-auto border-4 border-white hover:shadow-2xl transition-shadow duration-300">
-                            <img 
-                                src="andrea.png" 
-                                alt="Andrea Schöllnast - Mitgründerin Babsy"
-                                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                                onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                            >
-                            <!-- Fallback wenn Bild nicht geladen werden kann -->
-                            <div class="w-full h-full bg-gradient-to-br from-babsypurple-400 to-babsypurple-600 flex items-center justify-center" style="display: none;">
-                                <span class="text-white text-3xl font-bold">A</span>
+            <div x-show="!loading" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="event in filteredEvents" :key="event.slug">
+                    <article class="event-card bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer" 
+                             @click="openEvent(event)">
+                        <!-- Event Image -->
+                        <div class="h-48 bg-gradient-to-br from-babsypurple-100 to-cyan-100 relative overflow-hidden">
+                            <img x-show="event.image" 
+                                 :src="event.image" 
+                                 :alt="event.title"
+                                 class="w-full h-full object-cover">
+                            <div x-show="!event.image" 
+                                 class="w-full h-full flex items-center justify-center">
+                                <svg class="w-16 h-16 text-babsypurple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
                             </div>
-                        </div>
-                        <!-- Optional: Status-Indikator -->
-                        <div class="absolute bottom-2 right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white"></div>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-1">Andrea Schöllnast</h3>
-                    <p class="text-gray-600 mb-2">Mitgründerin</p>
-                    <a href="tel:+41788616025" class="text-babsypurple-600 hover:text-babsypurple-700 transition-colors">
-                        <svg class="inline w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                            
-                        </svg>
-                    </a>
-                </div>
-                
-                <div class="text-center">
-                    <!-- Rundes Bild für Sophia -->
-                    <div class="relative inline-block mb-4">
-                        <div class="w-40 h-40 rounded-full overflow-hidden shadow-xl mx-auto border-4 border-white hover:shadow-2xl transition-shadow duration-300">
-                            <img 
-                                src="sophia.png" 
-                                alt="Sophia - Mitgründerin Babsy"
-                                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                                onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                            >
-                            <!-- Fallback wenn Bild nicht geladen werden kann -->
-                            <div class="w-full h-full bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center" style="display: none;">
-                                <span class="text-white text-3xl font-bold">S</span>
+                            <!-- Event Badge -->
+                            <div class="absolute top-4 right-4">
+                                <span :class="'event-badge ' + event.type" x-text="getEventTypeLabel(event.type)"></span>
                             </div>
-                        </div>
-                        <!-- Optional: Status-Indikator -->
-                        <div class="absolute bottom-2 right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white"></div>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-1">Sophia Banner</h3>
-                    <p class="text-gray-600 mb-2">Mitgründerin</p>
-                    <a href="tel:+41799386109" class="text-babsypurple-600 hover:text-babsypurple-700 transition-colors">
-                        <svg class="inline w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                            
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Support Section -->
-    <section id="support" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    <span class="gradient-text">Unterstützungsmöglichkeiten</span>
-                </h2>
-                <p class="text-gray-600 text-lg">Werden Sie Teil unserer Gemeinschaft</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-gradient-to-br from-babsypurple-50 to-babsypurple-100 rounded-xl p-6 hover:shadow-lg transition duration-300">
-                    <h3 class="text-lg font-semibold mb-2">Mitgliedschaften</h3>
-                    <p class="text-gray-700 text-sm mb-4">Werden Sie Mitglied und unterstützen Sie unsere Vision</p>
-                    <a href="#" class="text-babsypurple-600 hover:text-babsypurple-700 font-medium">Mehr erfahren →</a>
-                </div>
-                
-                <div class="bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-xl p-6 hover:shadow-lg transition duration-300">
-                    <h3 class="text-lg font-semibold mb-2">Firmenangebote</h3>
-                    <p class="text-gray-700 text-sm mb-4">Spezielle Angebote für Unternehmen und ihre Mitarbeiter</p>
-                    <a href="#" class="text-cyan-600 hover:text-cyan-700 font-medium">Mehr erfahren →</a>
-                </div>
-                
-                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 hover:shadow-lg transition duration-300">
-                    <h3 class="text-lg font-semibold mb-2">Freiwilligenarbeit</h3>
-                    <p class="text-gray-700 text-sm mb-4">Engagieren Sie sich ehrenamtlich für Familien</p>
-                    <a href="#" class="text-green-600 hover:text-green-700 font-medium">Mehr erfahren →</a>
-                </div>
-                
-                <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl p-6 hover:shadow-lg transition duration-300">
-                    <h3 class="text-lg font-semibold mb-2">Spenden</h3>
-                    <p class="text-gray-700 text-sm mb-4">Unterstützen Sie uns mit Ihrer Spende</p>
-                    <a href="#" class="text-yellow-600 hover:text-yellow-700 font-medium">Jetzt spenden →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    <span class="gradient-text">Kontakt</span>
-                </h2>
-                <p class="text-gray-600 text-lg">Wir sind für Sie da</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <div class="bg-babsypurple-100 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-babsypurple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold mb-2">Besuche uns</h3>
-                    <p class="text-gray-600">
-                        Babsy Office<br>
-                        Weidenweg 28<br>
-                        4303 Kaiseraugst
-                    </p>
-                    <p id="opening-times" class="text-sm mt-2">
-                        Mo-Fr 09-12 | 14-17h
-                    </p>
-                </div>
-                
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <div class="bg-cyan-100 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold mb-2">Ruf uns an</h3>
-                    <div class="space-y-1">
-                        <p class="text-gray-600">Andrea: <a href="tel:+41788616025" class="text-babsypurple-600">+41 78 861 60 25</a></p>
-                        <p class="text-gray-600">Stephanie: <a href="tel:+41799386109" class="text-babsypurple-600">+41 79 938 61 09</a></p>
-                        <p class="text-gray-600">Oliver: <a href="tel:+41763741109" class="text-babsypurple-600">+41 76 374 11 09</a></p>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <div class="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold mb-2">Schreibe uns</h3>
-                    <div class="space-y-1">
-                        <p class="text-gray-600">
-                            <a href="mailto:parent@babsy.ch" class="text-babsypurple-600">parent@babsy.ch</a>
-                        </p>
-                        <p class="text-gray-600">
-                            <a href="mailto:sitter@babsy.ch" class="text-babsypurple-600">sitter@babsy.ch</a>
-                        </p>
-                        <p class="text-gray-600">
-                            <a href="mailto:company@babsy.ch" class="text-babsypurple-600">company@babsy.ch</a>
-                        </p>
-                    </div> 
-                </div>
-            </div>
-            
-            <script>
-                function checkOpeningTimes() {
-                    const now = new Date();
-                    const day = now.getDay(); // Sonntag=0, Montag=1, ..., Samstag=6
-                    const hour = now.getHours();
-                    const minute = now.getMinutes();
-                    const time = hour * 60 + minute; // Minuten seit Mitternacht
-
-                    const openingTimes = {
-                        1: [[9 * 60, 12 * 60], [14 * 60, 17 * 60]], // Mo
-                        2: [[9 * 60, 12 * 60], [14 * 60, 17 * 60]], // Di
-                        3: [[9 * 60, 12 * 60], [14 * 60, 17 * 60]], // Mi
-                        4: [[9 * 60, 12 * 60], [14 * 60, 17 * 60]], // Do
-                        5: [[9 * 60, 12 * 60], [14 * 60, 17 * 60]], // Fr
-                    };
-
-                    let el = document.getElementById("opening-times");
-
-                    if (day === 0 || day === 6) {
-                        // Wochenende
-                        el.innerHTML = "Mo–Fr 09–12 | 14–17h <span class='text-red-500 font-semibold'>(Geschlossen – Wochenende)</span>";
-                        return;
-                    }
-
-                    let isOpen = false;
-                    if (openingTimes[day]) {
-                        isOpen = openingTimes[day].some(([start, end]) => time >= start && time < end);
-                    }
-
-                    if (isOpen) {
-                        el.innerHTML = "Mo–Fr 09–12 | 14–17h <span class='text-green-500 font-semibold'>(Geöffnet)</span>";
-                    } else {
-                        el.innerHTML = "Mo–Fr 09–12 | 14–17h <span class='text-red-500 font-semibold'>(Geschlossen)</span>";
-                    }
-                }
-
-                checkOpeningTimes();
-            </script>
-            
-            <!-- Newsletter -->
-            <div class="mt-12 bg-gradient-to-r from-babsypurple-600 to-cyan-600 rounded-2xl p-8 text-center relative overflow-hidden">
-                <!-- Background decoration -->
-                <div class="absolute inset-0 opacity-10">
-                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-white rounded-full"></div>
-                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-white rounded-full"></div>
-                </div>
-                
-                <div class="relative z-10">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    
-                    <h3 class="text-3xl font-bold text-white mb-4">Newsletter abonnieren</h3>
-                    <p class="text-babsypurple-100 mb-8 max-w-md mx-auto">
-                        Bleiben Sie auf dem Laufenden über unsere neuesten Entwicklungen und erhalten Sie exklusive Updates direkt in Ihr Postfach
-                    </p>
-                    
-                    <!-- Newsletter Form for Listmonk -->
-                    <form id="newsletter-form" class="max-w-sm mx-auto" method="POST" action="https://newsletter.babsy.ch/subscription/form" target="_blank">
-                        <div class="space-y-4">
-                            <input 
-                                type="email" 
-                                name="email" 
-                                required
-                                placeholder="Ihre E-Mail-Adresse" 
-                                class="w-full px-6 py-4 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-white/50 transition duration-300"
-                            >
-                            
-                            <!-- List UUID for Babsy Newsletter -->
-                            <input type="hidden" name="l" value="4a5e1896-d6bc-4566-8f4f-08200dcf2266">
-                            
-                            <button 
-                                type="submit" 
-                                name="submit"
-                                id="newsletter-submit"
-                                class="w-full bg-white text-babsypurple-600 px-6 py-4 rounded-xl font-semibold hover:bg-gray-100 transform hover:scale-105 transition duration-300 shadow-lg"
-                            >
-                                <span class="flex items-center justify-center">
-                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    Jetzt abonnieren
-                                </span>
-                            </button>
                         </div>
                         
-                        <!-- Success/Error Messages -->
-                        <div id="newsletter-message" class="mt-4 hidden">
-                            <p class="text-white font-medium"></p>
+                        <!-- Event Content -->
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                <span x-text="formatDate(event.date)"></span>
+                                <span x-show="event.location" class="ml-4 flex items-center">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                    <span x-text="event.location"></span>
+                                </span>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-gray-900 mb-3" x-text="event.title"></h3>
+                            <p class="text-gray-600 mb-4 line-clamp-3" x-text="event.excerpt"></p>
+                            
+                            <div class="flex justify-between items-center">
+                                <span class="text-babsypurple-600 font-semibold hover:text-babsypurple-700 transition">
+                                    Mehr erfahren →
+                                </span>
+                                <span x-show="event.price" class="text-sm text-gray-500" x-text="event.price"></span>
+                            </div>
                         </div>
-                    </form>
-                    
-                    <p class="text-babsypurple-200 text-sm mt-6">
-                        <svg class="inline w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
-                        </svg>
-                        Ihre Daten sind bei uns sicher. Kein Spam, versprochen!
-                    </p>
-                </div>
+                    </article>
+                </template>
+            </div>
+            
+            <!-- No events message -->
+            <div x-show="!loading && filteredEvents.length === 0" class="text-center py-20">
+                <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Keine Events gefunden</h3>
+                <p class="text-gray-600">Derzeit sind keine Events in dieser Kategorie verfügbar.</p>
             </div>
         </div>
     </section>
+
+    <!-- Event Modal -->
+    <div x-show="selectedEvent" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-50 overflow-y-auto"
+         style="display: none;">
+        
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-black bg-opacity-50" @click="closeEvent()"></div>
+        
+        <!-- Modal -->
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="relative bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 transform scale-95"
+                 x-transition:enter-end="opacity-100 transform scale-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 transform scale-100"
+                 x-transition:leave-end="opacity-0 transform scale-95">
+                
+                <!-- Close Button -->
+                <button @click="closeEvent()" 
+                        class="absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-lg hover:shadow-xl transition">
+                    <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                
+                <!-- Modal Content -->
+                <template x-if="selectedEvent">
+                    <div>
+                        <!-- Header Image -->
+                        <div class="h-64 bg-gradient-to-br from-babsypurple-100 to-cyan-100 relative overflow-hidden rounded-t-2xl">
+                            <img x-show="selectedEvent.image" 
+                                 :src="selectedEvent.image" 
+                                 :alt="selectedEvent.title"
+                                 class="w-full h-full object-cover">
+                            <div x-show="!selectedEvent.image" 
+                                 class="w-full h-full flex items-center justify-center">
+                                <svg class="w-24 h-24 text-babsypurple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <!-- Event Badge -->
+                            <div class="absolute top-6 left-6">
+                                <span :class="'event-badge text-base ' + selectedEvent.type" x-text="getEventTypeLabel(selectedEvent.type)"></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="p-8">
+                            <h2 class="text-3xl font-bold text-gray-900 mb-4" x-text="selectedEvent.title"></h2>
+                            
+                            <!-- Event Meta -->
+                            <div class="flex flex-wrap gap-6 text-gray-600 mb-6">
+                                <div class="flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-babsypurple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span x-text="formatDate(selectedEvent.date)"></span>
+                                </div>
+                                <div x-show="selectedEvent.time" class="flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-babsypurple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span x-text="selectedEvent.time"></span>
+                                </div>
+                                <div x-show="selectedEvent.location" class="flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-babsypurple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                    <span x-text="selectedEvent.location"></span>
+                                </div>
+                                <div x-show="selectedEvent.price" class="flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-babsypurple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                                    </svg>
+                                    <span x-text="selectedEvent.price"></span>
+                                </div>
+                            </div>
+                            
+                            <!-- Content -->
+                            <div class="prose prose-lg max-w-none mb-8">
+                                <div x-html="renderMarkdown(selectedEvent.content)"></div>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <template x-if="selectedEvent.registration_url">
+                                    <a :href="selectedEvent.registration_url" 
+                                       target="_blank"
+                                       class="bg-babsypurple-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-babsypurple-800 transition duration-300 text-center">
+                                        Jetzt anmelden
+                                    </a>
+                                </template>
+                                <template x-if="selectedEvent.contact_email">
+                                    <a :href="'mailto:' + selectedEvent.contact_email" 
+                                       class="border-2 border-babsypurple-600 text-babsypurple-600 px-8 py-3 rounded-lg font-semibold hover:bg-babsypurple-600 hover:text-white transition duration-300 text-center">
+                                        Kontakt aufnehmen
+                                    </a>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center mb-4">
-                        <img src="babsy-logo.png" alt="Babsy Logo" class="h-8 w-auto">
-                    </div>
-                    <p class="text-gray-400">Die neue Welt der Kinderbetreuung</p>
+            <div class="text-center">
+                <div class="flex items-center justify-center mb-4">
+                    <img src="../assets/images/babsy-logo.png" alt="Babsy Logo" class="h-8 w-auto"
+                         onerror="this.src='../babsy-logo.png'; this.onerror=null;">
                 </div>
-                
-                <div>
-                    <h5 class="font-semibold mb-3">Quick Links</h5>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#about" class="hover:text-white transition">Über uns</a></li>
-                        <li><a href="#services" class="hover:text-white transition">Services</a></li>
-                        <li><a href="/events/" class="hover:text-white transition">Events</a></li>
-                        <li><a href="#team" class="hover:text-white transition">Team</a></li>
-                        <li><a href="#support" class="hover:text-white transition">Unterstützung</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h5 class="font-semibold mb-3">Rechtliches</h5>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white transition">Datenschutz</a></li>
-                        <li><a href="#" class="hover:text-white transition">Impressum</a></li>
-                        <li><a href="#" class="hover:text-white transition">AGB</a></li>
-                        <li><a href="#" class="hover:text-white transition">FAQ</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h5 class="font-semibold mb-3">Folge uns</h5>
-                    <div class="flex space-x-4">
-                        <a href="https://www.facebook.com/babsybabysitter/" class="text-gray-400 hover:text-white transition">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                        </a>
-                        <a href="https://twitter.com/BabsyDein" class="text-gray-400 hover:text-white transition">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                            </svg>
-                        </a>
-                        <a href="https://www.instagram.com/babsy_babysitter/" class="text-gray-400 hover:text-white transition">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/>
-                            </svg>
-                        </a>
-                    </div>
+                <p class="text-gray-400 mb-4">Die neue Welt der Kinderbetreuung</p>
+                <div class="flex justify-center space-x-6">
+                    <a href="../" class="text-gray-400 hover:text-white transition">Home</a>
+                    <a href="../#about" class="text-gray-400 hover:text-white transition">Über uns</a>
+                    <a href="/events/" class="text-gray-400 hover:text-white transition">Events</a>
+                    <a href="../#contact" class="text-gray-400 hover:text-white transition">Kontakt</a>
                 </div>
             </div>
             
-            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+            <div class="border-t border-gray-800 pt-8 mt-8 text-center text-gray-400">
                 <p>&copy; 2025 Babsy. Alle Rechte vorbehalten.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Back to Top Button -->
-    <button id="backToTop" class="fixed bottom-8 right-8 bg-babsypurple-700 text-white p-3 rounded-full shadow-lg hover:bg-babsypurple-800 transition duration-300 opacity-0 pointer-events-none">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-        </svg>
-    </button>
-
     <script>
+        function eventsApp() {
+            return {
+                events: [],
+                filteredEvents: [],
+                activeFilter: 'all',
+                loading: true,
+                selectedEvent: null,
+                
+                init() {
+                    console.log('Events app initializing...');
+                    this.loadEvents();
+                    this.filterEvents('all');
+                    console.log('Events loaded:', this.events.length);
+                },
+                
+                loadEvents() {
+                    // Sofort Beispiel-Events laden
+                    this.events = this.getSampleEvents();
+                    this.loading = false;
+                },
+                
+                getSampleEvents() {
+                    return [
+                        {
+                            slug: 'meet-greet-basel-2025',
+                            title: 'Meet & Greet Basel - Frühjahr 2025',
+                            date: '2025-04-15',
+                            time: '14:00 - 17:00',
+                            location: 'Basel, Stadtzentrum',
+                            type: 'meet-greet',
+                            price: 'Kostenlos',
+                            image: '../assets/images/events/meet-greet-basel.jpg',
+                            excerpt: 'Lernen Sie andere Eltern und erfahrene Babysitter in entspannter Atmosphäre kennen.',
+                            content: `# Meet & Greet Basel - Frühjahr 2025
+
+Lernen Sie andere Eltern und erfahrene Babysitter in entspannter Atmosphäre kennen.
+
+## Was erwartet Sie?
+
+- **Persönliches Kennenlernen**: Treffen Sie potenzielle Babysitter face-to-face
+- **Erfahrungsaustausch**: Sprechen Sie mit anderen Eltern über ihre Erfahrungen
+- **Kostenlose Beratung**: Unser Team beantwortet alle Ihre Fragen zur Babsy App
+- **Kinder willkommen**: Bringen Sie gerne Ihre Kinder mit
+
+## Programm
+
+**14:00 - 14:30** Begrüßung und Vorstellung
+**14:30 - 15:30** Freies Kennenlernen bei Kaffee und Kuchen
+**15:30 - 16:00** Babsy App Demonstration
+**16:00 - 17:00** Individuelle Beratung und Networking
+
+Melden Sie sich noch heute an - die Plätze sind begrenzt!`,
+                            registration_url: 'https://babsy.ch/events/basel-anmeldung',
+                            contact_email: 'events@babsy.ch'
+                        },
+                        {
+                            slug: 'workshop-sicher-babysitting',
+                            title: 'Workshop: Sicher Babysitting',
+                            date: '2025-03-20',
+                            time: '18:00 - 20:00',
+                            location: 'Online (Zoom)',
+                            type: 'workshop',
+                            price: 'CHF 25',
+                            image: '../assets/images/events/workshop-sicherheit.jpg',
+                            excerpt: 'Lernen Sie die wichtigsten Sicherheitsaspekte beim Babysitting kennen.',
+                            content: `# Workshop: Sicher Babysitting
+
+Ein informativer Workshop für neue und erfahrene Babysitter.
+
+## Inhalte
+
+- **Notfallmanagement**: Wie reagiere ich in Notfällen richtig?
+- **Entwicklungsphasen**: Altersgerechte Betreuung verstehen
+- **Kommunikation**: Richtig mit Kindern und Eltern kommunizieren
+- **Rechtliche Aspekte**: Was muss ich als Babysitter beachten?
+
+## Für wen geeignet?
+
+- Neue Babysitter, die gerade anfangen
+- Erfahrene Sitter, die ihr Wissen auffrischen möchten
+- Eltern, die mehr über gute Kinderbetreuung erfahren möchten
+
+Nach dem Workshop erhalten Sie ein Teilnahmezertifikat.`,
+                            registration_url: 'https://babsy.ch/workshops/sicher-babysitting',
+                            contact_email: 'workshop@babsy.ch'
+                        },
+                        {
+                            slug: 'online-info-session',
+                            title: 'Online Info-Session: Wie funktioniert Babsy?',
+                            date: '2025-02-28',
+                            time: '19:30 - 20:30',
+                            location: 'Online (Zoom)',
+                            type: 'online',
+                            price: 'Kostenlos',
+                            image: '../assets/images/events/online-session.jpg',
+                            excerpt: 'Alles was Sie über die Babsy App wissen müssen - bequem von zu Hause.',
+                            content: `# Online Info-Session: Wie funktioniert Babsy?
+
+Erfahren Sie alles über die Babsy App bequem von zu Hause aus.
+
+## Themen
+
+- **App-Funktionen**: Schritt-für-Schritt durch die Babsy App
+- **Sicherheit**: Wie werden Babysitter überprüft?
+- **Kosten**: Was kostet die Nutzung der App?
+- **Q&A**: Ihre Fragen werden live beantwortet
+
+## Technische Voraussetzungen
+
+- Computer, Tablet oder Smartphone mit Internetzugang
+- Zoom-App (kostenloser Download)
+- Optional: Kamera und Mikrofon für Fragen
+
+Die Session wird aufgezeichnet und steht später als Video zur Verfügung.`,
+                            registration_url: 'https://zoom.us/webinar/register/babsy-info',
+                            contact_email: 'info@babsy.ch'
+                        },
+                        {
+                            slug: 'summer-event-2025',
+                            title: 'Babsy Sommer-Event 2025',
+                            date: '2025-07-12',
+                            time: '10:00 - 16:00',
+                            location: 'Zürich, Seepromenade',
+                            type: 'meet-greet',
+                            price: 'CHF 15 (Kinder frei)',
+                            image: 'assets/images/events/sommer-event.jpg',
+                            excerpt: 'Unser großes Jahres-Event mit vielen Aktivitäten für die ganze Familie.',
+                            content: `# Babsy Sommer-Event 2025
+
+Unser großes Jahres-Event mit vielen Aktivitäten für die ganze Familie.
+
+## Highlights
+
+- **Familien-Picknick**: Gemeinsames Essen am Zürichsee
+- **Kinder-Aktivitäten**: Hüpfburg, Bastelecke und Spiele
+- **Babysitter-Markt**: Lernen Sie viele Babysitter persönlich kennen
+- **Live-Musik**: Lokale Bands sorgen für gute Stimmung
+
+## Programm
+
+**10:00** Eröffnung und Begrüßung
+**10:30** Kinder-Aktivitäten starten
+**12:00** Gemeinsames Picknick
+**14:00** Babysitter-Markt und Networking
+**15:00** Live-Musik
+**16:00** Abschluss
+
+Bei schlechtem Wetter findet das Event in der nahegelegenen Mehrzweckhalle statt.
+
+Bringen Sie Ihre Picknickdecke mit!`,
+                            registration_url: 'https://babsy.ch/events/sommer-2025',
+                            contact_email: 'events@babsy.ch'
+                        }
+                    ];
+                },
+                
+                filterEvents(type) {
+                    this.activeFilter = type;
+                    if (type === 'all') {
+                        this.filteredEvents = [...this.events];
+                    } else {
+                        this.filteredEvents = this.events.filter(event => event.type === type);
+                    }
+                },
+                
+                openEvent(event) {
+                    this.selectedEvent = event;
+                    document.body.style.overflow = 'hidden';
+                },
+                
+                closeEvent() {
+                    this.selectedEvent = null;
+                    document.body.style.overflow = '';
+                },
+                
+                formatDate(dateString) {
+                    const options = { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric',
+                        weekday: 'long'
+                    };
+                    return new Date(dateString).toLocaleDateString('de-CH', options);
+                },
+                
+                getEventTypeLabel(type) {
+                    const labels = {
+                        'meet-greet': 'Meet & Greet',
+                        'workshop': 'Workshop',
+                        'info': 'Info-Event',
+                        'online': 'Online'
+                    };
+                    return labels[type] || type;
+                },
+                
+                renderMarkdown(text) {
+                    if (!text) return '';
+                    
+                    if (typeof marked !== 'undefined') {
+                        return marked.parse(text);
+                    }
+                    
+                    // Fallback: einfache Markdown-zu-HTML Konvertierung
+                    return text
+                        .replace(/^# (.*$)/gm, '<h1 class="text-3xl font-bold mb-4">$1</h1>')
+                        .replace(/^## (.*$)/gm, '<h2 class="text-2xl font-semibold mb-3 mt-6">$1</h2>')
+                        .replace(/^### (.*$)/gm, '<h3 class="text-xl font-semibold mb-2 mt-4">$1</h3>')
+                        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
+                        .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
+                        .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-babsypurple-600 hover:text-babsypurple-700 underline" target="_blank">$1</a>')
+                        .replace(/^- (.*$)/gm, '<li class="ml-4">• $1</li>')
+                        .replace(/\n\n/g, '</p><p class="mb-4">')
+                        .replace(/^(?!<[h|l|p])/gm, '<p class="mb-4">')
+                        .replace(/$(?!<\/[h|l|p]>)/gm, '</p>')
+                        .replace(/<p class="mb-4"><\/p>/g, '');
+                }
+            }
+        }
+
+        // Keyboard navigation for modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const app = document.querySelector('[x-data="eventsApp()"]').__x.$data;
+                if (app.selectedEvent) {
+                    app.closeEvent();
+                }
+            }
+        });
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -751,46 +666,6 @@
                     });
                 }
             });
-        });
-
-        // Back to top button
-        const backToTopButton = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.remove('opacity-0', 'pointer-events-none');
-                backToTopButton.classList.add('opacity-100');
-            } else {
-                backToTopButton.classList.add('opacity-0', 'pointer-events-none');
-                backToTopButton.classList.remove('opacity-100');
-            }
-        });
-
-        backToTopButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Add animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fade-in-up');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        // Observe all sections
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
         });
     </script>
 </body>
