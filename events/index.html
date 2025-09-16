@@ -124,6 +124,37 @@
             background-color: #cffafe;
             color: #0e7490;
         }
+        
+        /* Event Placeholder */
+        .event-placeholder {
+            background: linear-gradient(135deg, #f4b8e3 0%, #adf8ff 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .event-placeholder-logo {
+            width: 48px;
+            height: 48px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .event-placeholder-text {
+            color: #8d166b;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
     </style>
 </head>
 <body class="bg-gray-50" x-data="eventsApp()" x-init="init()">
@@ -229,17 +260,30 @@
                     <article class="event-card bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer" 
                              @click="openEvent(event)">
                         <!-- Event Image -->
-                        <div class="h-48 bg-gradient-to-br from-babsypurple-100 to-cyan-100 relative overflow-hidden">
+                        <div class="h-48 relative overflow-hidden">
                             <img x-show="event.image" 
                                  :src="event.image" 
                                  :alt="event.title"
-                                 class="w-full h-full object-cover">
-                            <div x-show="!event.image" 
-                                 class="w-full h-full flex items-center justify-center">
-                                <svg class="w-16 h-16 text-babsypurple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                </svg>
+                                 class="w-full h-full object-cover"
+                                 @error="$event.target.style.display='none'; $event.target.nextElementSibling.style.display='flex';">
+                            
+                            <!-- Placeholder with Babsy branding -->
+                            <div x-show="!event.image || $el.querySelector('img').style.display === 'none'" 
+                                 class="event-placeholder w-full h-full">
+                                <div class="event-placeholder-logo">
+                                    <!-- Babsy Logo Icon -->
+                                    <svg class="w-6 h-6 text-babsypurple-600" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                    </svg>
+                                </div>
+                                <div class="event-placeholder-text">
+                                    Event Bild
+                                </div>
+                                <div class="text-babsypurple-500 text-xs mt-1">
+                                    Coming Soon
+                                </div>
                             </div>
+                            
                             <!-- Event Badge -->
                             <div class="absolute top-4 right-4">
                                 <span :class="'event-badge ' + event.type" x-text="getEventTypeLabel(event.type)"></span>
@@ -323,17 +367,30 @@
                 <template x-if="selectedEvent">
                     <div>
                         <!-- Header Image -->
-                        <div class="h-64 bg-gradient-to-br from-babsypurple-100 to-cyan-100 relative overflow-hidden rounded-t-2xl">
+                        <div class="h-64 relative overflow-hidden rounded-t-2xl">
                             <img x-show="selectedEvent.image" 
                                  :src="selectedEvent.image" 
                                  :alt="selectedEvent.title"
-                                 class="w-full h-full object-cover">
-                            <div x-show="!selectedEvent.image" 
-                                 class="w-full h-full flex items-center justify-center">
-                                <svg class="w-24 h-24 text-babsypurple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                </svg>
+                                 class="w-full h-full object-cover"
+                                 @error="$event.target.style.display='none'; $event.target.nextElementSibling.style.display='flex';">
+                            
+                            <!-- Placeholder for Modal -->
+                            <div x-show="!selectedEvent.image || $el.querySelector('img').style.display === 'none'" 
+                                 class="event-placeholder w-full h-full">
+                                <div class="event-placeholder-logo" style="width: 80px; height: 80px;">
+                                    <!-- Larger Babsy Logo Icon for Modal -->
+                                    <svg class="w-10 h-10 text-babsypurple-600" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                    </svg>
+                                </div>
+                                <div class="event-placeholder-text text-lg">
+                                    Event Bild
+                                </div>
+                                <div class="text-babsypurple-500 text-sm mt-2">
+                                    Coming Soon
+                                </div>
                             </div>
+                            
                             <!-- Event Badge -->
                             <div class="absolute top-6 left-6">
                                 <span :class="'event-badge text-base ' + selectedEvent.type" x-text="getEventTypeLabel(selectedEvent.type)"></span>
@@ -456,7 +513,7 @@
                             location: 'Basel, Stadtzentrum',
                             type: 'meet-greet',
                             price: 'Kostenlos',
-                            image: '../assets/images/events/meet-greet-basel.jpg',
+                            // image: '../assets/images/events/meet-greet-basel.jpg', // Auskommentiert für Placeholder
                             excerpt: 'Lernen Sie andere Eltern und erfahrene Babysitter in entspannter Atmosphäre kennen.',
                             content: `# Meet & Greet Basel - Frühjahr 2025
 
@@ -550,7 +607,7 @@ Die Session wird aufgezeichnet und steht später als Video zur Verfügung.`,
                             location: 'Zürich, Seepromenade',
                             type: 'meet-greet',
                             price: 'CHF 15 (Kinder frei)',
-                            image: 'assets/images/events/sommer-event.jpg',
+                            image: '../assets/images/events/sommer-event.jpg',
                             excerpt: 'Unser großes Jahres-Event mit vielen Aktivitäten für die ganze Familie.',
                             content: `# Babsy Sommer-Event 2025
 
