@@ -89,13 +89,6 @@
         .animate-fade-in-up {
             animation: fade-in-up 0.6s ease-out;
         }
-        .loading {
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-        .loaded {
-            opacity: 1;
-        }
         
         /* Event Card Hover Effects */
         .event-card {
@@ -108,42 +101,51 @@
         
         /* Event Type Badges */
         .event-badge {
-            @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.625rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
         }
         .event-badge.meet-greet {
-            @apply bg-babsypurple-100 text-babsypurple-800;
+            background-color: #f4b8e3;
+            color: #8d166b;
         }
         .event-badge.workshop {
-            @apply bg-blue-100 text-blue-800;
+            background-color: #dbeafe;
+            color: #1e40af;
         }
         .event-badge.info {
-            @apply bg-green-100 text-green-800;
+            background-color: #dcfce7;
+            color: #166534;
         }
         .event-badge.online {
-            @apply bg-cyan-100 text-cyan-800;
+            background-color: #cffafe;
+            color: #0e7490;
         }
     </style>
 </head>
-<body class="bg-gray-50 loading" x-data="eventsApp()">
+<body class="bg-gray-50" x-data="eventsApp()" x-init="init()">
     <!-- Navigation -->
     <nav class="bg-white shadow-lg sticky top-0 z-50" x-data="{ mobileMenuOpen: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <a href="/">
-                            <img src="assets/images/babsy-logo.png" alt="Babsy Logo" class="h-8 w-auto">
+                        <a href="../">
+                            <img src="../babsy-logo.png" alt="Babsy Logo" class="h-8 w-auto">
                         </a>
                     </div>
                 </div>
                 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="/" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Home</a>
-                    <a href="/#about" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Über uns</a>
-                    <a href="/#services" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Services</a>
+                    <a href="../" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Home</a>
+                    <a href="../#about" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Über uns</a>
+                    <a href="../#services" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Services</a>
                     <a href="/events/" class="text-babsypurple-600 font-medium">Events</a>
-                    <a href="/#contact" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Kontakt</a>
+                    <a href="../#contact" class="text-gray-700 hover:text-babsypurple-600 transition duration-300">Kontakt</a>
                     <button class="bg-babsypurple-700 text-white px-4 py-2 rounded-lg hover:bg-babsypurple-800 transition duration-300">
                         Jetzt registrieren
                     </button>
@@ -164,11 +166,11 @@
         <!-- Mobile menu -->
         <div x-show="mobileMenuOpen" x-transition class="md:hidden bg-white border-t">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="/" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Home</a>
-                <a href="/#about" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Über uns</a>
-                <a href="/#services" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Services</a>
+                <a href="../" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Home</a>
+                <a href="../#about" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Über uns</a>
+                <a href="../#services" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Services</a>
                 <a href="/events/" class="block px-3 py-2 text-babsypurple-600 font-medium">Events</a>
-                <a href="/#contact" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Kontakt</a>
+                <a href="../#contact" class="block px-3 py-2 text-gray-700 hover:text-babsypurple-600">Kontakt</a>
             </div>
         </div>
     </nav>
@@ -258,241 +260,8 @@
                                     <span x-text="event.location"></span>
                                 </span>
                             </div>
-                            const match = lines[i].match(/^(\w+):\s*(.+)$/);
-                            if (match) {
-                                const key = match[1].toLowerCase();
-                                let value = match[2].trim();
-                                
-                                // Remove quotes if present
-                                if ((value.startsWith('"') && value.endsWith('"')) || 
-                                    (value.startsWith("'") && value.endsWith("'"))) {
-                                    value = value.slice(1, -1);
-                                }
-                                
-                                event[key] = value;
-                            }
-                        }
-                    }
-                    
-                    // Parse content (everything after frontmatter)
-                    const contentLines = lines.slice(contentStart);
-                    event.content = contentLines.join('\n').trim();
-                    
-                    // Extract excerpt from content (first paragraph)
-                    const paragraphs = event.content.split('\n\n');
-                    event.excerpt = paragraphs[0] || '';
-                    
-                    return event;
-                },
-                
-                getSampleEvents() {
-                    return [
-                        {
-                            slug: 'meet-greet-basel-2025',
-                            title: 'Meet & Greet Basel - Frühjahr 2025',
-                            date: '2025-04-15',
-                            time: '14:00 - 17:00',
-                            location: 'Basel, Stadtzentrum',
-                            type: 'meet-greet',
-                            price: 'Kostenlos',
-                            image: 'assets/images/events/meet-greet-basel.jpg',
-                            excerpt: 'Lernen Sie andere Eltern und erfahrene Babysitter in entspannter Atmosphäre kennen.',
-                            content: `# Meet & Greet Basel - Frühjahr 2025
-
-Lernen Sie andere Eltern und erfahrene Babysitter in entspannter Atmosphäre kennen.
-
-## Was erwartet Sie?
-
-- **Persönliches Kennenlernen**: Treffen Sie potenzielle Babysitter face-to-face
-- **Erfahrungsaustausch**: Sprechen Sie mit anderen Eltern über ihre Erfahrungen
-- **Kostenlose Beratung**: Unser Team beantwortet alle Ihre Fragen zur Babsy App
-- **Kinder willkommen**: Bringen Sie gerne Ihre Kinder mit
-
-## Programm
-
-**14:00 - 14:30** Begrüßung und Vorstellung
-**14:30 - 15:30** Freies Kennenlernen bei Kaffee und Kuchen
-**15:30 - 16:00** Babsy App Demonstration
-**16:00 - 17:00** Individuelle Beratung und Networking
-
-Melden Sie sich noch heute an - die Plätze sind begrenzt!`,
-                            registration_url: 'https://babsy.ch/events/basel-anmeldung',
-                            contact_email: 'events@babsy.ch'
-                        },
-                        {
-                            slug: 'workshop-sicher-babysitting',
-                            title: 'Workshop: Sicher Babysitting',
-                            date: '2025-03-20',
-                            time: '18:00 - 20:00',
-                            location: 'Online (Zoom)',
-                            type: 'workshop',
-                            price: 'CHF 25',
-                            excerpt: 'Lernen Sie die wichtigsten Sicherheitsaspekte beim Babysitting kennen.',
-                            content: `# Workshop: Sicher Babysitting
-
-Ein informativer Workshop für neue und erfahrene Babysitter.
-
-## Inhalte
-
-- **Notfallmanagement**: Wie reagiere ich in Notfällen richtig?
-- **Entwicklungsphasen**: Altersgerechte Betreuung verstehen
-- **Kommunikation**: Richtig mit Kindern und Eltern kommunizieren
-- **Rechtliche Aspekte**: Was muss ich als Babysitter beachten?
-
-## Für wen geeignet?
-
-- Neue Babysitter, die gerade anfangen
-- Erfahrene Sitter, die ihr Wissen auffrischen möchten
-- Eltern, die mehr über gute Kinderbetreuung erfahren möchten
-
-Nach dem Workshop erhalten Sie ein Teilnahmezertifikat.`,
-                            registration_url: 'https://babsy.ch/workshops/sicher-babysitting',
-                            contact_email: 'workshop@babsy.ch'
-                        },
-                        {
-                            slug: 'online-info-session',
-                            title: 'Online Info-Session: Wie funktioniert Babsy?',
-                            date: '2025-02-28',
-                            time: '19:30 - 20:30',
-                            location: 'Online (Zoom)',
-                            type: 'online',
-                            price: 'Kostenlos',
-                            excerpt: 'Alles was Sie über die Babsy App wissen müssen - bequem von zu Hause.',
-                            content: `# Online Info-Session: Wie funktioniert Babsy?
-
-Erfahren Sie alles über die Babsy App bequem von zu Hause aus.
-
-## Themen
-
-- **App-Funktionen**: Schritt-für-Schritt durch die Babsy App
-- **Sicherheit**: Wie werden Babysitter überprüft?
-- **Kosten**: Was kostet die Nutzung der App?
-- **Q&A**: Ihre Fragen werden live beantwortet
-
-## Technische Voraussetzungen
-
-- Computer, Tablet oder Smartphone mit Internetzugang
-- Zoom-App (kostenloser Download)
-- Optional: Kamera und Mikrofon für Fragen
-
-Die Session wird aufgezeichnet und steht später als Video zur Verfügung.`,
-                            registration_url: 'https://zoom.us/webinar/register/babsy-info',
-                            contact_email: 'info@babsy.ch'
-                        },
-                        {
-                            slug: 'summer-event-2025',
-                            title: 'Babsy Sommer-Event 2025',
-                            date: '2025-07-12',
-                            time: '10:00 - 16:00',
-                            location: 'Zürich, Seepromenade',
-                            type: 'meet-greet',
-                            price: 'CHF 15 (Kinder frei)',
-                            excerpt: 'Unser großes Jahres-Event mit vielen Aktivitäten für die ganze Familie.',
-                            content: `# Babsy Sommer-Event 2025
-
-Unser großes Jahres-Event mit vielen Aktivitäten für die ganze Familie.
-
-## Highlights
-
-- **Familien-Picknick**: Gemeinsames Essen am Zürichsee
-- **Kinder-Aktivitäten**: Hüpfburg, Bastelecke und Spiele
-- **Babysitter-Markt**: Lernen Sie viele Babysitter persönlich kennen
-- **Live-Musik**: Lokale Bands sorgen für gute Stimmung
-
-## Programm
-
-**10:00** Eröffnung und Begrüßung
-**10:30** Kinder-Aktivitäten starten
-**12:00** Gemeinsames Picknick
-**14:00** Babysitter-Markt und Networking
-**15:00** Live-Musik
-**16:00** Abschluss
-
-Bei schlechtem Wetter findet das Event in der nahegelegenen Mehrzweckhalle statt.
-
-Bringen Sie Ihre Picknickdecke mit!`,
-                            registration_url: 'https://babsy.ch/events/sommer-2025',
-                            contact_email: 'events@babsy.ch'
-                        }
-                    ];
-                },
-                
-                filterEvents(type) {
-                    this.activeFilter = type;
-                    if (type === 'all') {
-                        this.filteredEvents = [...this.events];
-                    } else {
-                        this.filteredEvents = this.events.filter(event => event.type === type);
-                    }
-                },
-                
-                openEvent(event) {
-                    this.selectedEvent = event;
-                    document.body.style.overflow = 'hidden'; // Prevent background scrolling
-                },
-                
-                closeEvent() {
-                    this.selectedEvent = null;
-                    document.body.style.overflow = ''; // Restore scrolling
-                },
-                
-                formatDate(dateString) {
-                    const options = { 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric',
-                        weekday: 'long'
-                    };
-                    return new Date(dateString).toLocaleDateString('de-CH', options);
-                },
-                
-                getEventTypeLabel(type) {
-                    const labels = {
-                        'meet-greet': 'Meet & Greet',
-                        'workshop': 'Workshop',
-                        'info': 'Info-Event',
-                        'online': 'Online'
-                    };
-                    return labels[type] || type;
-                },
-                
-                renderMarkdown(text) {
-                    if (!text) return '';
-                    
-                    if (typeof marked !== 'undefined') {
-                        return marked.parse(text);
-                    }
-                    
-                    // Fallback: einfache Markdown-zu-HTML Konvertierung
-                    return text
-                        .replace(/^# (.*$)/gm, '<h1 class="text-3xl font-bold mb-4">$1</h1>')
-                        .replace(/^## (.*$)/gm, '<h2 class="text-2xl font-semibold mb-3 mt-6">$1</h2>')
-                        .replace(/^### (.*$)/gm, '<h3 class="text-xl font-semibold mb-2 mt-4">$1</h3>')
-                        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
-                        .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
-                        .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-babsypurple-600 hover:text-babsypurple-700 underline" target="_blank">$1</a>')
-                        .replace(/^- (.*$)/gm, '<li class="ml-4">• $1</li>')
-                        .replace(/\n\n/g, '</p><p class="mb-4">')
-                        .replace(/^(?!<[h|l|p])/gm, '<p class="mb-4">')
-                        .replace(/$(?!<\/[h|l|p]>)/gm, '</p>')
-                        .replace(/<p class="mb-4"><\/p>/g, ''); // Entferne leere Paragraphen
-                }
-            }
-        }
-
-        // Keyboard navigation for modal
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                // Close modal if open
-                const app = document.querySelector('[x-data="eventsApp()"]').__x.$data;
-                if (app.selectedEvent) {
-                    app.closeEvent();
-                }
-            }
-        });
-    </script>
-</body>
-</html>            <h3 class="text-xl font-bold text-gray-900 mb-3" x-text="event.title"></h3>
+                            
+                            <h3 class="text-xl font-bold text-gray-900 mb-3" x-text="event.title"></h3>
                             <p class="text-gray-600 mb-4 line-clamp-3" x-text="event.excerpt"></p>
                             
                             <div class="flex justify-between items-center">
@@ -636,14 +405,14 @@ Bringen Sie Ihre Picknickdecke mit!`,
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
                 <div class="flex items-center justify-center mb-4">
-                    <img src="assets/images/babsy-logo.png" alt="Babsy Logo" class="h-8 w-auto">
+                    <img src="../babsy-logo.png" alt="Babsy Logo" class="h-8 w-auto">
                 </div>
                 <p class="text-gray-400 mb-4">Die neue Welt der Kinderbetreuung</p>
                 <div class="flex justify-center space-x-6">
-                    <a href="/" class="text-gray-400 hover:text-white transition">Home</a>
-                    <a href="/#about" class="text-gray-400 hover:text-white transition">Über uns</a>
+                    <a href="../" class="text-gray-400 hover:text-white transition">Home</a>
+                    <a href="../#about" class="text-gray-400 hover:text-white transition">Über uns</a>
                     <a href="/events/" class="text-gray-400 hover:text-white transition">Events</a>
-                    <a href="/#contact" class="text-gray-400 hover:text-white transition">Kontakt</a>
+                    <a href="../#contact" class="text-gray-400 hover:text-white transition">Kontakt</a>
                 </div>
             </div>
             
@@ -662,78 +431,236 @@ Bringen Sie Ihre Picknickdecke mit!`,
                 loading: true,
                 selectedEvent: null,
                 
-                async init() {
+                init() {
                     console.log('Events app initializing...');
-                    await this.loadEvents();
+                    this.loadEvents();
                     this.filterEvents('all');
-                    document.body.classList.add('loaded');
                     console.log('Events loaded:', this.events.length);
                 },
                 
-                async loadEvents() {
-                    try {
-                        // Erstmal die Beispiel-Events laden, damit die Seite funktioniert
-                        this.events = this.getSampleEvents();
-                        
-                        // Versuche zusätzlich echte Markdown-Dateien zu laden (falls vorhanden)
-                        const eventFiles = await this.getEventFiles();
-                        
-                        for (const filename of eventFiles) {
-                            const event = await this.loadEventFromMarkdown(filename);
-                            if (event) {
-                                this.events.push(event);
-                            }
-                        }
-                        
-                        // Sortiere Events nach Datum (neueste zuerst)
-                        this.events.sort((a, b) => new Date(b.date) - new Date(a.date));
-                        
-                    } catch (error) {
-                        console.error('Error loading events:', error);
-                        // Fallback zu Beispiel-Events (sollte immer funktionieren)
-                        if (this.events.length === 0) {
-                            this.events = this.getSampleEvents();
-                        }
-                    }
-                    
+                loadEvents() {
+                    // Sofort Beispiel-Events laden
+                    this.events = this.getSampleEvents();
                     this.loading = false;
                 },
                 
-                async getEventFiles() {
-                    // Für den Anfang verwenden wir die Beispiel-Events
-                    // Später können hier echte .md Dateien geladen werden
-                    return [];
+                getSampleEvents() {
+                    return [
+                        {
+                            slug: 'meet-greet-basel-2025',
+                            title: 'Meet & Greet Basel - Frühjahr 2025',
+                            date: '2025-04-15',
+                            time: '14:00 - 17:00',
+                            location: 'Basel, Stadtzentrum',
+                            type: 'meet-greet',
+                            price: 'Kostenlos',
+                            excerpt: 'Lernen Sie andere Eltern und erfahrene Babysitter in entspannter Atmosphäre kennen.',
+                            content: `# Meet & Greet Basel - Frühjahr 2025
+
+Lernen Sie andere Eltern und erfahrene Babysitter in entspannter Atmosphäre kennen.
+
+## Was erwartet Sie?
+
+- **Persönliches Kennenlernen**: Treffen Sie potenzielle Babysitter face-to-face
+- **Erfahrungsaustausch**: Sprechen Sie mit anderen Eltern über ihre Erfahrungen
+- **Kostenlose Beratung**: Unser Team beantwortet alle Ihre Fragen zur Babsy App
+- **Kinder willkommen**: Bringen Sie gerne Ihre Kinder mit
+
+## Programm
+
+**14:00 - 14:30** Begrüßung und Vorstellung
+**14:30 - 15:30** Freies Kennenlernen bei Kaffee und Kuchen
+**15:30 - 16:00** Babsy App Demonstration
+**16:00 - 17:00** Individuelle Beratung und Networking
+
+Melden Sie sich noch heute an - die Plätze sind begrenzt!`,
+                            registration_url: 'https://babsy.ch/events/basel-anmeldung',
+                            contact_email: 'events@babsy.ch'
+                        },
+                        {
+                            slug: 'workshop-sicher-babysitting',
+                            title: 'Workshop: Sicher Babysitting',
+                            date: '2025-03-20',
+                            time: '18:00 - 20:00',
+                            location: 'Online (Zoom)',
+                            type: 'workshop',
+                            price: 'CHF 25',
+                            excerpt: 'Lernen Sie die wichtigsten Sicherheitsaspekte beim Babysitting kennen.',
+                            content: `# Workshop: Sicher Babysitting
+
+Ein informativer Workshop für neue und erfahrene Babysitter.
+
+## Inhalte
+
+- **Notfallmanagement**: Wie reagiere ich in Notfällen richtig?
+- **Entwicklungsphasen**: Altersgerechte Betreuung verstehen
+- **Kommunikation**: Richtig mit Kindern und Eltern kommunizieren
+- **Rechtliche Aspekte**: Was muss ich als Babysitter beachten?
+
+## Für wen geeignet?
+
+- Neue Babysitter, die gerade anfangen
+- Erfahrene Sitter, die ihr Wissen auffrischen möchten
+- Eltern, die mehr über gute Kinderbetreuung erfahren möchten
+
+Nach dem Workshop erhalten Sie ein Teilnahmezertifikat.`,
+                            registration_url: 'https://babsy.ch/workshops/sicher-babysitting',
+                            contact_email: 'workshop@babsy.ch'
+                        },
+                        {
+                            slug: 'online-info-session',
+                            title: 'Online Info-Session: Wie funktioniert Babsy?',
+                            date: '2025-02-28',
+                            time: '19:30 - 20:30',
+                            location: 'Online (Zoom)',
+                            type: 'online',
+                            price: 'Kostenlos',
+                            excerpt: 'Alles was Sie über die Babsy App wissen müssen - bequem von zu Hause.',
+                            content: `# Online Info-Session: Wie funktioniert Babsy?
+
+Erfahren Sie alles über die Babsy App bequem von zu Hause aus.
+
+## Themen
+
+- **App-Funktionen**: Schritt-für-Schritt durch die Babsy App
+- **Sicherheit**: Wie werden Babysitter überprüft?
+- **Kosten**: Was kostet die Nutzung der App?
+- **Q&A**: Ihre Fragen werden live beantwortet
+
+## Technische Voraussetzungen
+
+- Computer, Tablet oder Smartphone mit Internetzugang
+- Zoom-App (kostenloser Download)
+- Optional: Kamera und Mikrofon für Fragen
+
+Die Session wird aufgezeichnet und steht später als Video zur Verfügung.`,
+                            registration_url: 'https://zoom.us/webinar/register/babsy-info',
+                            contact_email: 'info@babsy.ch'
+                        },
+                        {
+                            slug: 'summer-event-2025',
+                            title: 'Babsy Sommer-Event 2025',
+                            date: '2025-07-12',
+                            time: '10:00 - 16:00',
+                            location: 'Zürich, Seepromenade',
+                            type: 'meet-greet',
+                            price: 'CHF 15 (Kinder frei)',
+                            excerpt: 'Unser großes Jahres-Event mit vielen Aktivitäten für die ganze Familie.',
+                            content: `# Babsy Sommer-Event 2025
+
+Unser großes Jahres-Event mit vielen Aktivitäten für die ganze Familie.
+
+## Highlights
+
+- **Familien-Picknick**: Gemeinsames Essen am Zürichsee
+- **Kinder-Aktivitäten**: Hüpfburg, Bastelecke und Spiele
+- **Babysitter-Markt**: Lernen Sie viele Babysitter persönlich kennen
+- **Live-Musik**: Lokale Bands sorgen für gute Stimmung
+
+## Programm
+
+**10:00** Eröffnung und Begrüßung
+**10:30** Kinder-Aktivitäten starten
+**12:00** Gemeinsames Picknick
+**14:00** Babysitter-Markt und Networking
+**15:00** Live-Musik
+**16:00** Abschluss
+
+Bei schlechtem Wetter findet das Event in der nahegelegenen Mehrzweckhalle statt.
+
+Bringen Sie Ihre Picknickdecke mit!`,
+                            registration_url: 'https://babsy.ch/events/sommer-2025',
+                            contact_email: 'events@babsy.ch'
+                        }
+                    ];
                 },
                 
-                async loadEventFromMarkdown(filename) {
-                    try {
-                        const response = await fetch(`events/${filename}`);
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        
-                        const content = await response.text();
-                        return this.parseEventMarkdown(content, filename);
-                    } catch (error) {
-                        console.error(`Error loading ${filename}:`, error);
-                        return null;
+                filterEvents(type) {
+                    this.activeFilter = type;
+                    if (type === 'all') {
+                        this.filteredEvents = [...this.events];
+                    } else {
+                        this.filteredEvents = this.events.filter(event => event.type === type);
                     }
                 },
                 
-                parseEventMarkdown(content, filename) {
-                    const lines = content.split('\n');
-                    const event = {
-                        slug: filename.replace('.md', '')
+                openEvent(event) {
+                    this.selectedEvent = event;
+                    document.body.style.overflow = 'hidden';
+                },
+                
+                closeEvent() {
+                    this.selectedEvent = null;
+                    document.body.style.overflow = '';
+                },
+                
+                formatDate(dateString) {
+                    const options = { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric',
+                        weekday: 'long'
                     };
+                    return new Date(dateString).toLocaleDateString('de-CH', options);
+                },
+                
+                getEventTypeLabel(type) {
+                    const labels = {
+                        'meet-greet': 'Meet & Greet',
+                        'workshop': 'Workshop',
+                        'info': 'Info-Event',
+                        'online': 'Online'
+                    };
+                    return labels[type] || type;
+                },
+                
+                renderMarkdown(text) {
+                    if (!text) return '';
                     
-                    let contentStart = 0;
-                    let inFrontmatter = false;
+                    if (typeof marked !== 'undefined') {
+                        return marked.parse(text);
+                    }
                     
-                    // Parse Frontmatter (YAML Header)
-                    if (lines[0] === '---') {
-                        inFrontmatter = true;
-                        for (let i = 1; i < lines.length; i++) {
-                            if (lines[i] === '---') {
-                                contentStart = i + 1;
-                                break;
-                            }
+                    // Fallback: einfache Markdown-zu-HTML Konvertierung
+                    return text
+                        .replace(/^# (.*$)/gm, '<h1 class="text-3xl font-bold mb-4">$1</h1>')
+                        .replace(/^## (.*$)/gm, '<h2 class="text-2xl font-semibold mb-3 mt-6">$1</h2>')
+                        .replace(/^### (.*$)/gm, '<h3 class="text-xl font-semibold mb-2 mt-4">$1</h3>')
+                        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
+                        .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
+                        .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-babsypurple-600 hover:text-babsypurple-700 underline" target="_blank">$1</a>')
+                        .replace(/^- (.*$)/gm, '<li class="ml-4">• $1</li>')
+                        .replace(/\n\n/g, '</p><p class="mb-4">')
+                        .replace(/^(?!<[h|l|p])/gm, '<p class="mb-4">')
+                        .replace(/$(?!<\/[h|l|p]>)/gm, '</p>')
+                        .replace(/<p class="mb-4"><\/p>/g, '');
+                }
+            }
+        }
+
+        // Keyboard navigation for modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const app = document.querySelector('[x-data="eventsApp()"]').__x.$data;
+                if (app.selectedEvent) {
+                    app.closeEvent();
+                }
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
