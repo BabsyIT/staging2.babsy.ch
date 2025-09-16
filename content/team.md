@@ -9,10 +9,3 @@ name: Sophia Banner
 position: Mitgründerin
 image: assets/images/sophia.png
 phone: +41799386109
-
----
-
-name: Sophia Banner
-position: Mitgründerin
-image: assets/images/sophia.png
-phone: +41799386109
