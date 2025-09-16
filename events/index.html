@@ -663,14 +663,19 @@ Bringen Sie Ihre Picknickdecke mit!`,
                 selectedEvent: null,
                 
                 async init() {
+                    console.log('Events app initializing...');
                     await this.loadEvents();
                     this.filterEvents('all');
                     document.body.classList.add('loaded');
+                    console.log('Events loaded:', this.events.length);
                 },
                 
                 async loadEvents() {
                     try {
-                        // Lade alle Markdown-Dateien aus dem events/ Ordner
+                        // Erstmal die Beispiel-Events laden, damit die Seite funktioniert
+                        this.events = this.getSampleEvents();
+                        
+                        // Versuche zusätzlich echte Markdown-Dateien zu laden (falls vorhanden)
                         const eventFiles = await this.getEventFiles();
                         
                         for (const filename of eventFiles) {
@@ -685,23 +690,19 @@ Bringen Sie Ihre Picknickdecke mit!`,
                         
                     } catch (error) {
                         console.error('Error loading events:', error);
-                        // Fallback zu Beispiel-Events
-                        this.events = this.getSampleEvents();
+                        // Fallback zu Beispiel-Events (sollte immer funktionieren)
+                        if (this.events.length === 0) {
+                            this.events = this.getSampleEvents();
+                        }
                     }
                     
                     this.loading = false;
                 },
                 
                 async getEventFiles() {
-                    // In einer echten Implementierung würdest du hier eine API aufrufen
-                    // die alle .md Dateien im events/ Ordner zurückgibt
-                    // Für dieses Beispiel nutzen wir statische Dateinamen
-                    return [
-                        'meet-greet-basel-2025.md',
-                        'workshop-sicher-babysitting.md',
-                        'online-info-session.md',
-                        'summer-event-2025.md'
-                    ];
+                    // Für den Anfang verwenden wir die Beispiel-Events
+                    // Später können hier echte .md Dateien geladen werden
+                    return [];
                 },
                 
                 async loadEventFromMarkdown(filename) {
